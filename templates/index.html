@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon Tarocco</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Pokemon Tarocco</h1>
+        <p>Punti sbusto: {{ punti }}</p>
+        {% if messaggio %}
+        <p>{{ messaggio }}</p>
+        {% endif %}
+
+        <form action="/apri-pacchetto" method="post">
+            <button type="submit">Apri Pacchetto</button>
+        </form>
+
+        <form action="/salva-collezione" method="post">
+            <button type="submit">Salva Collezione</button>
+        </form>
+
+        <div class="collezione">
+            <h2>Pacchetti Aperti:</h2>
+            {% if collezione %}
+            <ul>
+                {% for carta in collezione %}
+                <li>{{ carta.Nome }} (Rarità: {{ carta.Rarità }}, Attacco: {{ carta.Attacco }}, Difesa: {{ carta.Difesa
+                    }})</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>La tua collezione è vuota.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+<style>
+    body {
+        background-color: rgb(255, 174, 51);
+    }
+
+    h1 {
+        font-size: 30px;
+        font-style: oblique;
+    }
+
+    a {
+        font-size: 30px;
+        font-style: oblique;
+        color: black;
+    }
+
+    p {
+        font-size: 30px;
+        font-style: oblique;
+    }
+
+    input {
+        font-size: 20px;
+        font-style: oblique;
+        margin-right: 15px;
+    }
+
+    button {
+        border-radius: 20px;
+        border-color: orange;
+        color: rgb(100, 5, 5);
+        background-color: white;
+        font-size: 30px;
+        margin-top: 20px;
+        font-style: oblique;
+        transition: all 0, 2 ease;
+    }
+
+    button:hover {
+        background-color: #edecec;
+        transform: scale(1.04);
+    }
+
+    .container {
+        text-align: center;
+        width: 500px;
+        max-width: 500px;
+        height: 1000px;
+        max-height: 10000px;
+        margin: auto;
+        border: 3px solid #ffffff;
+        padding: 15px;
+        border-radius: 30px;
+        position: relative;
+    }
+</style>
+
+</html>
