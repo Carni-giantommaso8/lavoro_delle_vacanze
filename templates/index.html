@@ -10,59 +10,67 @@
 <body>
     <div class="container">
         <h1>Pokemon Tarocco</h1>
-        <p>Punti sbusto: {{ punti }}</p>
+        <p>Punti sbusto: <strong>{{ punti }}</strong></p>
+        
         {% if messaggio %}
-        <p>{{ messaggio }}</p>
+        <p class="messaggio">{{ messaggio }}</p>
         {% endif %}
 
-        <form action="/apri-pacchetto" method="post">
-            <button type="submit">Apri Pacchetto</button>
-        </form>
+        <div class="azioni">
+            <form action="/apri-pacchetto" method="post">
+                <button type="submit">Apri Pacchetto</button>
+            </form>
 
-        <form action="/salva-collezione" method="post">
-            <button type="submit">Salva Collezione</button>
-        </form>
+            <form action="/salva-collezione" method="post">
+                <button type="submit">Salva Collezione</button>
+            </form>
+        </div>
 
         <div class="collezione">
-            <h2>Pacchetti Aperti:</h2>
+            <h2>Collezione Carte:</h2>
             {% if collezione %}
-            <ul>
+            <ul class="lista-carte">
                 {% for carta in collezione %}
-                <li>{{ carta.Nome }} (Rarità: {{ carta.Rarità }}, Attacco: {{ carta.Attacco }}, Difesa: {{ carta.Difesa
-                    }})</li>
+                <li class="carta">
+                    <span class="nome">{{ carta.Nome }}</span>
+                    <span class="rarita rarita-{{ carta.Rarità|lower }}">
+                        (Rarità: {{ carta.Rarità }})</span>
+                    <span class="statistiche">Attacco: {{ carta.Attacco }}, Difesa: {{ carta.Difesa }}</span>
+                </li>
                 {% endfor %}
             </ul>
             {% else %}
-            <p>La tua collezione è vuota.</p>
+            <p class="vuota">La tua collezione è vuota.</p>
             {% endif %}
         </div>
     </div>
 </body>
+
 <style>
+    /* Generale */
     body {
         background-color: rgb(255, 174, 51);
+        font-family: Arial, sans-serif;
+        color: #333333;
+        margin: 0;
+        padding: 0;
     }
 
     h1 {
-        font-size: 30px;
+        font-size: 35px;
         font-style: oblique;
-    }
-
-    a {
-        font-size: 30px;
-        font-style: oblique;
-        color: black;
+        margin-bottom: 20px;
     }
 
     p {
-        font-size: 30px;
-        font-style: oblique;
+        font-size: 20px;
+        margin: 10px 0;
     }
 
-    input {
-        font-size: 20px;
-        font-style: oblique;
-        margin-right: 15px;
+    .messaggio {
+        font-size: 18px;
+        color: green;
+        font-weight: bold;
     }
 
     button {
@@ -70,10 +78,11 @@
         border-color: orange;
         color: rgb(100, 5, 5);
         background-color: white;
-        font-size: 30px;
+        font-size: 20px;
         margin-top: 20px;
-        font-style: oblique;
-        transition: all 0, 2 ease;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
     }
 
     button:hover {
@@ -83,15 +92,80 @@
 
     .container {
         text-align: center;
-        width: 500px;
-        max-width: 500px;
-        height: 1000px;
-        max-height: 10000px;
-        margin: auto;
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
         border: 3px solid #ffffff;
-        padding: 15px;
         border-radius: 30px;
-        position: relative;
+        background-color: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Carte */
+    .collezione {
+        margin-top: 30px;
+        text-align: left;
+    }
+
+    .lista-carte {
+        list-style: none;
+        padding: 0;
+    }
+
+    .carta {
+        background-color: #f9f9f9;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .carta .nome {
+        font-weight: bold;
+        font-size: 18px;
+    }
+
+    .carta .rarita {
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+    .rarita-comune {
+        color: green;
+    }
+
+    .rarita-non-comune {
+        color: blue;
+    }
+
+    .rarita-rara {
+        color: purple;
+    }
+
+    .rarita-ultra-rara {
+        color: red;
+    }
+
+    .carta .statistiche {
+        margin-top: 5px;
+        font-size: 14px;
+    }
+
+    .vuota {
+        font-style: italic;
+        color: grey;
+    }
+
+    .azioni {
+        margin-top: 20px;
+    }
+
+    .azioni form {
+        display: inline-block;
+        margin: 0 10px;
     }
 </style>
 
